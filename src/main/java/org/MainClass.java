@@ -3,14 +3,17 @@ package org;
 import org.repository.HashMapCalendarRepository;
 import org.repository.ICalendarRepository;
 import org.service.DefaultMeetingService;
-import org.service.FileImportService;
+import org.interviews.service.InterviewsCalendarImportServices;
 import org.service.IImportService;
 import org.service.IMeetingService;
 
+import java.io.IOException;
+
 public class MainClass {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        IImportService importService = new InterviewsCalendarImportServices();
         ICalendarRepository calendarRepository = new HashMapCalendarRepository();
-        IImportService importService = new FileImportService(calendarRepository);
+        importService.importCalendarToRepository(calendarRepository);
 
         IMeetingService meetingService = new DefaultMeetingService(calendarRepository);
     }

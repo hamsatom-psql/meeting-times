@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation("com.google.code.findbugs","jsr305", "3.0.2")
+    implementation("com.google.code.gson","gson", "2.8.7")
 }
 
 tasks.getByName<Test>("test") {

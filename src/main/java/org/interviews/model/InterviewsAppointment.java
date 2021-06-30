@@ -1,14 +1,17 @@
 package org.interviews.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class InterviewsAppointment implements Serializable {
     private static final long serialVersionUID = -5964439089284713530L;
+    @SerializedName("calendar_id")
     private UUID calendarId;
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
     public UUID getCalendarId() {
         return calendarId;
@@ -19,20 +22,20 @@ public class InterviewsAppointment implements Serializable {
         return this;
     }
 
-    public ZonedDateTime getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public InterviewsAppointment setStart(ZonedDateTime start) {
+    public InterviewsAppointment setStart(LocalDateTime start) {
         this.start = start;
         return this;
     }
 
-    public ZonedDateTime getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public InterviewsAppointment setEnd(ZonedDateTime end) {
+    public InterviewsAppointment setEnd(LocalDateTime end) {
         this.end = end;
         return this;
     }

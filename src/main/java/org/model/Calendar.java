@@ -51,4 +51,42 @@ public class Calendar {
             }
         }
     }
+
+    public boolean isPeriodAvailable(@Nonnull LocalDateTime start, @Nonnull LocalDateTime end) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start after end - " + start + " < " + end + " in " + id);
+        }
+
+        DaySlotTypes daySlotTypes = timeSlots.get(start.toLocalDate());
+        if (daySlotTypes != null) {
+            if (start.toLocalDate().isBefore(end.toLocalDate())) {
+                boolean isTodayAvailable = daySlotTypes.isPeriodAvailable(start.toLocalTime(), LocalTime.MAX);
+                LocalDateTime startOfNextDay = LocalDateTime.of(start.plusDays(1).toLocalDate(), LocalTime.MIN);
+                return isTodayAvailable && isPeriodAvailable(startOfNextDay, end);
+            } else {
+                return daySlotTypes.isPeriodAvailable(start.toLocalTime(), end.toLocalTime());
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isTypeAvailable(@Nonnull LocalDateTime start, @Nonnull LocalDateTime end, @Nonnull UUID typeId) {
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start after end - " + start + " < " + end + " in " + id);
+        }
+
+        DaySlotTypes daySlotTypes = timeSlots.get(start.toLocalDate());
+        if (daySlotTypes != null) {
+            if (start.toLocalDate().isBefore(end.toLocalDate())) {
+                boolean isTodayAvailable = daySlotTypes.isTypeAvailable(start.toLocalTime(), LocalTime.MAX, typeId);
+                LocalDateTime startOfNextDay = LocalDateTime.of(start.plusDays(1).toLocalDate(), LocalTime.MIN);
+                return isTodayAvailable && isTypeAvailable(startOfNextDay, end, typeId);
+            } else {
+                return daySlotTypes.isPeriodAvailable(start.toLocalTime(), end.toLocalTime());
+            }
+        }
+
+        return false;
+    }
 }

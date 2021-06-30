@@ -23,7 +23,7 @@ public class InterviewsCalendarImportServices implements IImportService {
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer()).create();
     private final InterviewsConfig interviewsConfig;
 
-    public InterviewsCalendarImportServices(InterviewsConfig interviewsConfig) {
+    public InterviewsCalendarImportServices(@Nonnull InterviewsConfig interviewsConfig) {
         this.interviewsConfig = interviewsConfig;
     }
 

@@ -19,10 +19,12 @@ public class Iso8601TimeInterval {
         return timeInterval;
     }
 
+    @Nonnull
     public LocalDateTime getStart() {
         return start;
     }
 
+    @Nonnull
     public LocalDateTime getEnd() {
         return end;
     }

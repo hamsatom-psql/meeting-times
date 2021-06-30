@@ -36,7 +36,7 @@ public class Calendar {
         }
     }
 
-    public void useTimeSlot(@Nonnull LocalDateTime start, @Nonnull LocalDateTime end) {
+    public void useTimeSlots(@Nonnull LocalDateTime start, @Nonnull LocalDateTime end) {
         if (start.isAfter(end)) {
             throw new IllegalArgumentException("Start after end - " + start + " < " + end + " in " + id);
         }
@@ -46,7 +46,7 @@ public class Calendar {
             if (start.toLocalDate().isBefore(end.toLocalDate())) {
                 daySlotTypes.takeSlots(start.toLocalTime(), LocalTime.MAX);
                 LocalDateTime startOfNextDay = LocalDateTime.of(start.plusDays(1).toLocalDate(), LocalTime.MIN);
-                useTimeSlot(startOfNextDay, end);
+                useTimeSlots(startOfNextDay, end);
             } else {
                 daySlotTypes.takeSlots(start.toLocalTime(), end.toLocalTime());
             }

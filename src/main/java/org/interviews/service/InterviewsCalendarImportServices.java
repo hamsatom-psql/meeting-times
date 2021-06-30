@@ -41,7 +41,7 @@ public class InterviewsCalendarImportServices implements IImportService {
 
             Calendar calendar = new Calendar(calendarId.get());
             timeSlots.forEach(slot -> calendar.setAvailableTimeSlots(slot.getStart(), slot.getEnd(), slot.getTypeId()));
-            appointments.forEach(appointment -> calendar.useTimeSlot(appointment.getStart(), appointment.getEnd()));
+            appointments.forEach(appointment -> calendar.useTimeSlots(appointment.getStart(), appointment.getEnd()));
             calendarRepository.save(calendar);
         }
     }

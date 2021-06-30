@@ -73,6 +73,25 @@ class DaySlotTypesTest {
     }
 
     @Test
+    void takeSlots_part() {
+        LocalTime earlyStart = START.minusHours(5);
+        LocalTime lateEnd = END.plusHours(5);
+        daySlots.setAvailableTypes(earlyStart, lateEnd, TYPE);
+        daySlots.takeSlots(START, END);
+
+        Assertions.assertTrue(daySlots.isPeriodAvailable(earlyStart, START));
+        Assertions.assertTrue(daySlots.isTypeAvailable(earlyStart, START, TYPE));
+
+
+        Assertions.assertFalse(daySlots.isPeriodAvailable(START, END));
+        Assertions.assertFalse(daySlots.isTypeAvailable(START, END, TYPE));
+
+
+        Assertions.assertTrue(daySlots.isPeriodAvailable(END, lateEnd));
+        Assertions.assertTrue(daySlots.isTypeAvailable(END, lateEnd, TYPE));
+    }
+
+    @Test
     void takeSlots_startBeforeEnd() {
         Assertions.assertThrows(RuntimeException.class, () -> daySlots.takeSlots(END, START));
     }

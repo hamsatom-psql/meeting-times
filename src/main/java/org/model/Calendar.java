@@ -84,7 +84,7 @@ public class Calendar {
                 LocalDateTime startOfNextDay = LocalDateTime.of(start.plusDays(1).toLocalDate(), LocalTime.MIN);
                 return isTodayAvailable && isTypeAvailable(startOfNextDay, end, typeId);
             } else {
-                return daySlotTypes.isPeriodAvailable(start.toLocalTime(), end.toLocalTime());
+                return daySlotTypes.isTypeAvailable(start.toLocalTime(), end.toLocalTime(), typeId);
             }
         }
 

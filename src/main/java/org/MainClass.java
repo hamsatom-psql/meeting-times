@@ -11,7 +11,7 @@ import org.service.IMeetingService;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MainClass {
@@ -27,7 +27,7 @@ public class MainClass {
         ));
 
         IMeetingService meetingService = new DefaultMeetingService(calendarRepository);
-        List<ZonedDateTime> availableTime = meetingService.findAvailableTime(calendarIds, Duration.ofMinutes(30), Iso8601TimeInterval.parse("2019-03-01T13:00:00Z/2019-05-11T15:30:00Z"));
+        List<LocalDateTime> availableTime = meetingService.findAvailableTime(calendarIds, Duration.ofMinutes(30), Iso8601TimeInterval.parse("2019-03-01T13:00:00Z/2019-05-11T15:30:00Z"), UUID.fromString("452935de-975e-11e5-ae1a-c8e0eb18c1e9"));
         availableTime.forEach(System.out::println);
     }
 }

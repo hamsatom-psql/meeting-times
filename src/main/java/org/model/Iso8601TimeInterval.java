@@ -8,6 +8,7 @@ public class Iso8601TimeInterval {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    @Nonnull
     public static Iso8601TimeInterval parse(@Nonnull String iso8601TimeInterval) {
         String[] intervalBorders = iso8601TimeInterval.split("/");
         LocalDateTime start = ZonedDateTime.parse(intervalBorders[0]).toLocalDateTime();

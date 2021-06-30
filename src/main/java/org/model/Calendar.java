@@ -12,10 +12,11 @@ public class Calendar {
     private final Map<LocalDate, DaySlotTypes> timeSlots = new HashMap<>();
     private final UUID id;
 
-    public Calendar(UUID id) {
+    public Calendar(@Nonnull UUID id) {
         this.id = id;
     }
 
+    @Nonnull
     public UUID getId() {
         return id;
     }

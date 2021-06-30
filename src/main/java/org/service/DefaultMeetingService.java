@@ -5,9 +5,8 @@ import org.model.Iso8601TimeInterval;
 import org.repository.ICalendarRepository;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class DefaultMeetingService implements IMeetingService {
@@ -19,15 +18,42 @@ public class DefaultMeetingService implements IMeetingService {
 
     @Nonnull
     @Override
-    public List<ZonedDateTime> findAvailableTime(@Nonnull Set<UUID> calendarIds, @Nonnull Duration duration, @Nonnull Iso8601TimeInterval periodToSearch, @Nullable UUID timeSlotType) {
+    public List<LocalDateTime> findAvailableTime(@Nonnull Set<UUID> calendarIds, @Nonnull Duration duration, @Nonnull Iso8601TimeInterval periodToSearch) {
         if (periodToSearch.getStart().isAfter(periodToSearch.getEnd())) {
             throw new IllegalArgumentException("Start after end - " + periodToSearch.getStart() + " < " + periodToSearch.getEnd());
         }
 
         List<Calendar> calendars = getCalendars(calendarIds);
+        List<LocalDateTime> availableTimes = new ArrayList<>();
+        for (LocalDateTime start = periodToSearch.getStart(); start.isBefore(periodToSearch.getEnd().plus(duration)); start = start.plusMinutes(1)) {
+            LocalDateTime finalStart = start;
+            boolean fitsToAllCalendars = calendars.stream().allMatch(calendar -> calendar.isPeriodAvailable(finalStart, finalStart.plus(duration)));
+            if (fitsToAllCalendars) {
+                availableTimes.add(finalStart);
+            }
+        }
 
+        return availableTimes;
+    }
 
-        return Collections.emptyList();
+    @Nonnull
+    @Override
+    public List<LocalDateTime> findAvailableTime(@Nonnull Set<UUID> calendarIds, @Nonnull Duration duration, @Nonnull Iso8601TimeInterval periodToSearch, @Nonnull UUID timeSlotType) {
+        if (periodToSearch.getStart().isAfter(periodToSearch.getEnd())) {
+            throw new IllegalArgumentException("Start after end - " + periodToSearch.getStart() + " < " + periodToSearch.getEnd());
+        }
+
+        List<Calendar> calendars = getCalendars(calendarIds);
+        List<LocalDateTime> availableTimes = new ArrayList<>();
+        for (LocalDateTime start = periodToSearch.getStart(); start.isBefore(periodToSearch.getEnd().plus(duration)); start = start.plusMinutes(1)) {
+            LocalDateTime finalStart = start;
+            boolean fitsToAllCalendars = calendars.stream().allMatch(calendar -> calendar.isTypeAvailable(finalStart, finalStart.plus(duration), timeSlotType));
+            if (fitsToAllCalendars) {
+                availableTimes.add(finalStart);
+            }
+        }
+
+        return availableTimes;
     }
 
     private List<Calendar> getCalendars(Set<UUID> calendarIds) {

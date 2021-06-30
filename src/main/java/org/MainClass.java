@@ -27,7 +27,8 @@ public class MainClass {
         ));
 
         IMeetingService meetingService = new DefaultMeetingService(calendarRepository);
-        List<LocalDateTime> availableTime = meetingService.findAvailableTime(calendarIds, Duration.ofMinutes(30), Iso8601TimeInterval.parse("2019-03-01T13:00:00Z/2019-05-11T15:30:00Z"), UUID.fromString("452935de-975e-11e5-ae1a-c8e0eb18c1e9"));
+        List<LocalDateTime> availableTime = meetingService.findAvailableTime(calendarIds, Duration.ofMinutes(15),
+                Iso8601TimeInterval.parse("2019-03-01T13:00:00Z/2019-05-11T15:30:00Z"), UUID.fromString("452935de-975e-11e5-ae1a-c8e0eb18c1e9"));
         availableTime.forEach(System.out::println);
     }
 }

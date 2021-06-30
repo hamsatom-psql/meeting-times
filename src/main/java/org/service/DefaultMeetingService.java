@@ -25,7 +25,7 @@ public class DefaultMeetingService implements IMeetingService {
 
         List<Calendar> calendars = getCalendars(calendarIds);
         List<LocalDateTime> availableTimes = new ArrayList<>();
-        for (LocalDateTime start = periodToSearch.getStart(); start.isBefore(periodToSearch.getEnd().plus(duration)); start = start.plusMinutes(1)) {
+        for (LocalDateTime start = periodToSearch.getStart(); start.plus(duration).isBefore(periodToSearch.getEnd()); start = start.plusMinutes(1)) {
             LocalDateTime finalStart = start;
             boolean fitsToAllCalendars = calendars.stream().allMatch(calendar -> calendar.isPeriodAvailable(finalStart, finalStart.plus(duration)));
             if (fitsToAllCalendars) {

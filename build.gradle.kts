@@ -10,9 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.code.findbugs","jsr305", "3.0.2")
+    implementation("com.google.code.findbugs", "jsr305", "3.0.2")
     implementation("com.google.code.gson", "gson", "2.8.7")
-    implementation("org.junit.jupiter", "junit-jupiter-engine", "5.7.2")
+    testImplementation("org.junit.jupiter", "junit-jupiter-engine", "5.7.2")
+    testImplementation("org.mockito", "mockito-junit-jupiter", "3.11.2")
 }
 
 tasks.getByName<Test>("test") {

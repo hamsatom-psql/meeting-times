@@ -29,7 +29,11 @@ public class InterviewsCalendarImportServices implements IImportService {
 
     @Override
     public void importCalendarToRepository(@Nonnull ICalendarRepository calendarRepository) throws IOException {
-        for (File file : interviewsConfig.getCalendarsFolder().listFiles()) {
+        File[] files = interviewsConfig.getCalendarsFolder().listFiles();
+        if (files == null) {
+            throw new IOException("No files found in " + interviewsConfig.getCalendarsFolder());
+        }
+        for (File file : files) {
             InterviewsCalendar interviewsCalendar = fileToCalendar(file);
             List<InterviewsAppointment> appointments = interviewsCalendar.getAppointments();
             List<InterviewsTimeSlot> timeSlots = interviewsCalendar.getTimeSlots();

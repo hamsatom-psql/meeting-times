@@ -20,15 +20,16 @@ public class MainClass {
         ICalendarRepository calendarRepository = new HashMapCalendarRepository();
         importService.importCalendarToRepository(calendarRepository);
 
+        IMeetingService meetingService = new DefaultMeetingService(calendarRepository);
+
         Set<UUID> calendarIds = new HashSet<>(Arrays.asList(
                 UUID.fromString("48cadf26-975e-11e5-b9c2-c8e0eb18c1e9"),
                 UUID.fromString("452dccfc-975e-11e5-bfa5-c8e0eb18c1e9"),
                 UUID.fromString("48644c7a-975e-11e5-a090-c8e0eb18c1e9")
         ));
-
-        IMeetingService meetingService = new DefaultMeetingService(calendarRepository);
         List<LocalDateTime> availableTime = meetingService.findAvailableTime(calendarIds, Duration.ofMinutes(15),
                 Iso8601TimeInterval.parse("2019-03-01T13:00:00Z/2019-05-11T15:30:00Z"), UUID.fromString("452935de-975e-11e5-ae1a-c8e0eb18c1e9"));
+
         availableTime.forEach(System.out::println);
     }
 }
